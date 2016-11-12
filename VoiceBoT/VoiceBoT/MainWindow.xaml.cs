@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Speech.Recognition;
 using System.Speech.Synthesis;
@@ -16,7 +17,7 @@ namespace VoiceBoT
         SpeechSynthesizer synthesizer = new SpeechSynthesizer();
         Choices choices = new Choices();
         SpeechRecognitionEngine speechRecognition = new SpeechRecognitionEngine();
-
+        bool awake = true;
         public MainWindow()
         {
             Thread t1 = new Thread(new ThreadStart(TalkWithMe));
@@ -27,14 +28,14 @@ namespace VoiceBoT
             t1.Start();
         }
 
-        public void GreetMe()
+        private void GreetMe()
         {
-            synthesizer.Speak("Hello, from now on you can talk with me");
+            synthesizer.Speak("Hello Pavel");
         }
 
-        public void TalkWithMe()
+        private void TalkWithMe()
         {
-            choices.Add(new string[] {"hello", "how are you"});
+            choices.Add(new string[] { "hello", "how are you", "what time is it", "open google", "sleep", "wake", "restart" });
 
             Grammar grammar = new Grammar(new GrammarBuilder(choices));
 
@@ -52,22 +53,43 @@ namespace VoiceBoT
             }
         }
 
-        public void Say(string text)
+        private void Say(string text)
         {
             synthesizer.Speak(text);
         }
 
         private void SpeechRecognitionOnSpeechRecognized(object sender, SpeechRecognizedEventArgs speechRecognizedEventArgs)
-         {
+        {
             string text = speechRecognizedEventArgs.Result.Text;
 
-            if(text.Equals("hello"))
+
+            if (text.Equals("wake")) awake = true;
+            if (text.Equals("sleep")) awake = false;
+
+
+            if (awake == true)
             {
-                Say("Hey");
-            }
-            if (text.Equals("how are you"))
-            {
-                Say("I'm good, how are you?");
+                if (text.Equals("hello"))
+                {
+                    Say("Hey");
+                }
+                if (text.Equals("how are you"))
+                {
+                    Say("I'm good, how are you?");
+                }
+                if (text.Equals("what time is it"))
+                {
+                    Say(DateTime.Now.ToString("h:mm tt"));
+                }
+                if (text.Equals("open google"))
+                {
+                    Process.Start("http://www.google.com");
+                }
+                if (text.Equals("restart"))
+                {
+                    Process.Start(@"C:\Users\irony\Source\Repos\VoiceBot\VoiceBoT\VoiceBoT\bin\Debug\VoiceBot.exe");
+                    Environment.Exit(0);
+                }
             }
         }
     }
