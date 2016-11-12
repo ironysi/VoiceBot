@@ -90,7 +90,7 @@ namespace VoiceBoT
                 }
                 if (text.Equals("open google"))
                 {
-                    Process.Start("http://www.google.com");
+                    Process.Start("https://www.youtube.com/watch?v=DraCptKRg28&index=13&list=PLuTSXWlOadXOCEfgFic0Q4CwaydRRYJrr");
                 }
                 if (text.Equals("restart"))
                 {
