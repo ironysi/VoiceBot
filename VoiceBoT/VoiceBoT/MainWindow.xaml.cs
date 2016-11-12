@@ -20,21 +20,13 @@ namespace VoiceBoT
         bool awake = true;
         public MainWindow()
         {
-            Thread t1 = new Thread(new ThreadStart(TalkWithMe));
-
             InitializeComponent();
+
+            InputTxt.IsReadOnly = true;
+            OutputTxt.IsReadOnly = true;
+
             GreetMe();
 
-            t1.Start();
-        }
-
-        private void GreetMe()
-        {
-            synthesizer.Speak("Hello Pavel");
-        }
-
-        private void TalkWithMe()
-        {
             choices.Add(new string[] { "hello", "how are you", "what time is it", "open google", "sleep", "wake", "restart" });
 
             Grammar grammar = new Grammar(new GrammarBuilder(choices));
@@ -51,10 +43,17 @@ namespace VoiceBoT
             {
                 throw;
             }
+
+        }
+
+        private void GreetMe()
+        {
+            synthesizer.Speak("Hello Pavel");
         }
 
         private void Say(string text)
         {
+            OutputTxt.AppendText(text + "\n");
             synthesizer.Speak(text);
         }
 
@@ -63,8 +62,16 @@ namespace VoiceBoT
             string text = speechRecognizedEventArgs.Result.Text;
 
 
-            if (text.Equals("wake")) awake = true;
-            if (text.Equals("sleep")) awake = false;
+            if (text.Equals("wake"))
+            {
+                awake = true;
+                Statelbl.Content = "Awake";
+            }
+            if (text.Equals("sleep"))
+            {
+                awake = false;
+                Statelbl.Content = "Sleeping";
+            }
 
 
             if (awake == true)
@@ -91,6 +98,7 @@ namespace VoiceBoT
                     Environment.Exit(0);
                 }
             }
+            InputTxt.AppendText(text + "\n");
         }
     }
 }

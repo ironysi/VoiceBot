@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VoiceBoT"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="MainWindow" Height="219.608" Width="298.529" WindowStyle="ToolWindow">
+    <Grid Margin="0,0,287,101">
+        <TextBox x:Name="InputTxt" AcceptsReturn="True" HorizontalAlignment="Left" Height="88" Margin="21,21,-113,-21" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" BorderThickness="2" />
+        <TextBox x:Name="OutputTxt" AcceptsReturn="True" HorizontalAlignment="Left" Height="88" Margin="163,21,-255,-21" TextWrapping="Wrap" VerticalAlignment="Top" Width="96" BorderThickness="2" />
+        <Label x:Name="Input" Content="Input" HorizontalAlignment="Left" Margin="21,-5,-117,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="Output" Content="Output" HorizontalAlignment="Left" Margin="163,-5,-259,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="Statelbl" Content="Awake" HorizontalAlignment="Left" Margin="91,126,-189,-86" VerticalAlignment="Top" Width="102" Height="49" FontSize="20" FontWeight="Bold"/>
+
     </Grid>
 </Window>
