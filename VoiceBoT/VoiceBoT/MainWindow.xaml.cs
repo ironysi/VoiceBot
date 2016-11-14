@@ -24,7 +24,7 @@ namespace VoiceBoT
 
             GreetMe();
 
-            choices.Add(new string[] { "hello", "how are you", "what time is it", "open google", "sleep", "wake", "restart", "open git" });
+            choices.Add(new string[] { "hello", "how are you", "what time is it", "open google", "sleep", "wake", "restart", "open git", "close git " });
 
             Grammar grammar = new Grammar(new GrammarBuilder(choices));
 
@@ -54,7 +54,8 @@ namespace VoiceBoT
             synthesizer.Speak(text);
         }
 
-        private void SpeechRecognitionOnSpeechRecognized(object sender, SpeechRecognizedEventArgs speechRecognizedEventArgs)
+        private void SpeechRecognitionOnSpeechRecognized(object sender,
+            SpeechRecognizedEventArgs speechRecognizedEventArgs)
         {
             string text = speechRecognizedEventArgs.Result.Text;
 
@@ -87,19 +88,50 @@ namespace VoiceBoT
                 }
                 if (text.Equals("open google"))
                 {
-                    Process.Start("https://www.youtube.com/watch?v=DraCptKRg28&index=13&list=PLuTSXWlOadXOCEfgFic0Q4CwaydRRYJrr");
+                    Process.Start(
+                        "https://www.youtube.com/watch?v=DraCptKRg28&index=13&list=PLuTSXWlOadXOCEfgFic0Q4CwaydRRYJrr");
                 }
                 if (text.Equals("restart"))
                 {
-                    Process.Start(@"C:\Users\irony\Source\Repos\VoiceBot\VoiceBoT\VoiceBoT\bin\Debug\VoiceBot.exe");
+                    Process.Start(@"C:\Users\Pavel\Source\Repos\VoiceBot\VoiceBoT\VoiceBoT\bin\Debug\VoiceBot.exe");
                     Environment.Exit(0);
                 }
                 if (text.Equals("open git"))
                 {
                     Process.Start(@"C:\Program Files\Git\git-bash.exe");
                 }
+                if (text.Equals("close git"))
+                {
+                    KillProcess("");
+                }
+                InputTxt.AppendText(text + "\n");
             }
-            InputTxt.AppendText(text + "\n");
+        }
+
+        public static void KillProcess(string processName)
+        {
+            Process[] processes = null;
+            try
+            {
+                processes = Process.GetProcessesByName(processName);
+                Process process = processes[0];
+
+                if (!process.HasExited)
+                {
+                    process.Kill();
+                }
+            }
+            finally
+            {
+                if (processes != null)
+                {
+                    foreach (var p in processes)
+                    {
+                        p.Dispose();
+                    }
+                }
+            }
+
         }
     }
 }
