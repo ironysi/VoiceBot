@@ -3,9 +3,6 @@ using System.Diagnostics;
 using System.Windows;
 using System.Speech.Recognition;
 using System.Speech.Synthesis;
-using System.Threading;
-
-
 
 namespace VoiceBoT
 {
@@ -27,7 +24,7 @@ namespace VoiceBoT
 
             GreetMe();
 
-            choices.Add(new string[] { "hello", "how are you", "what time is it", "open google", "sleep", "wake", "restart" });
+            choices.Add(new string[] { "hello", "how are you", "what time is it", "open google", "sleep", "wake", "restart", "open git" });
 
             Grammar grammar = new Grammar(new GrammarBuilder(choices));
 
@@ -96,6 +93,10 @@ namespace VoiceBoT
                 {
                     Process.Start(@"C:\Users\irony\Source\Repos\VoiceBot\VoiceBoT\VoiceBoT\bin\Debug\VoiceBot.exe");
                     Environment.Exit(0);
+                }
+                if (text.Equals("open git"))
+                {
+                    Process.Start(@"C:\Program Files\Git\git-bash.exe");
                 }
             }
             InputTxt.AppendText(text + "\n");
